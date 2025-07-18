@@ -1,28 +1,30 @@
 
 const moves = ['rock', 'paper', 'scissors'];
-const outcome = [[1,0,2],
-                 [2,1,0],
-                 [0,2,1]] // [human][computer], 0-lose, 1-draw, 2-win
+const outcomes = [[1,0,2],
+                  [2,1,0],
+                  [0,2,1]] // [human][computer], 0-lose, 1-draw, 2-win
 
 
 function getComputerChoice() {
+  // returns an integer between 0 and 2 representing the computers move.
   return Math.floor(Math.random() * 3);
 }
 
 function getHumanChoice() {
+  // returns an integer between 0 and 2 representing the humans move.
   let h = prompt('Enter your move (rock, paper or scissors)').toLowerCase();
   return moves.indexOf(h);
 }
 
 
 function playGame () {
-
+// Plays 5 rounds of rockpaperscissors with the computer, tracking scores.
   let humanScore = 0;
   let computerScore = 0;
 
   function playRound(humanChoice, computerChoice) {
-    
-    switch (outcome[humanChoice][computerChoice]) {
+// Determines the outcome of a single round of rockpaperscissors
+    switch (outcomes[humanChoice][computerChoice]) {
       case 0:
         console.log("You lose! " + moves[humanChoice] + " gets beaten by " + moves[computerChoice] + ".");
         computerScore++; 
