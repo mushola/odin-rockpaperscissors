@@ -17,35 +17,55 @@ function getHumanChoice() {
 }
 
 
-function playGame () {
-// Plays 5 rounds of rockpaperscissors with the computer, tracking scores.
-  let humanScore = 0;
-  let computerScore = 0;
 
-  function playRound(humanChoice, computerChoice) {
+let gamesPlayed = 0;
+let humanScore = 0;
+let computerScore = 0;
+
+function playRound(humanChoice, computerChoice) {
+  if (gamesPlayed == 0) {
+    humanScore = 0;
+    computerScore = 0;
+  }
 // Determines the outcome of a single round of rockpaperscissors
-    switch (outcomes[humanChoice][computerChoice]) {
-      case 0:
-        console.log("You lose! " + moves[humanChoice] + " gets beaten by " + moves[computerChoice] + ".");
-        computerScore++; 
-        break;
-      case 1:
-        console.log("Draw! Both played " + moves[humanChoice]);
-        break;
-      case 2:
-        console.log("You win! " + moves[humanChoice] + " beats " + moves[computerChoice] + ".");
-        humanScore++;
-        break;
+  switch (outcomes[humanChoice][computerChoice]) {
+    case 0:
+      resultText.textContent = "You lose! " + moves[humanChoice] + " gets beaten by " + moves[computerChoice] + ".";
+      computerScore++; 
+      break;
+    case 1:
+      resultText.textContent = "Draw! Both played " + moves[humanChoice];
+      break;
+    case 2:
+      resultText.textContent = "You win! " + moves[humanChoice] + " beats " + moves[computerChoice] + ".";
+      humanScore++;
+      break;
+  }
+  gamesPlayed++;
+  scoreText.textContent = `games: ${gamesPlayed}, human: ${humanScore}, computer: ${computerScore}.`;
+  if (gamesPlayed == 5) {
+    scoreText.textContent += " That's it!!!  "
+    gamesPlayed = 0;
     }
-    console.log("human: " + humanScore + ", computer: " + computerScore);
   }
 
-  for (i=0; i<5; i++) {
-    const humanChoice = getHumanChoice();
-    const computerChoice = getComputerChoice();
-    playRound(humanChoice, computerChoice)
-  }
 
-}
+// UI Section
+const btnScissors = document.querySelector("#btnScissors");
+const btnPaper = document.querySelector("#btnPaper");
+const btnRock = document.querySelector("#btnRock");
+const resultText = document.querySelector("#resultText");
+const scoreText = document.querySelector("#scoreText");
 
-playGame()
+
+btnScissors.addEventListener("click", () => {
+  playRound(2, getComputerChoice());
+})
+
+btnPaper.addEventListener("click", () => {
+  playRound(1, getComputerChoice());
+})
+
+btnRock.addEventListener("click", () => {
+  playRound(0, getComputerChoice());
+})
